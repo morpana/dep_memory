@@ -602,10 +602,15 @@ def single_cell_hnn_vary():
         duration:  0.000707071605656
         Values[0]:  0.982638888889
     '''
+    #ws = [30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60]
+    # m_w = 46
+    #ws = [70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100]
+    # b_b = 92
+    ws = [30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60]
     for w in ws:
         matrix_shape = (1,)
-        m_encoder = scalar_sdr(40,22,-0.25,0.25,matrix_shape)
-        b_encoder = scalar_sdr(46,20,0.0,1.0)
+        m_encoder = scalar_sdr(80,46,-0.25,0.25,matrix_shape)
+        b_encoder = scalar_sdr(92,w,0.0,1.0)
         # Calculate number of nodes of hopfield net
         nodes = m_encoder.n*reduce(lambda x, y: x*y, m_encoder.ndarray_shape) + b_encoder.n
         # i) Initialize hopfield network for each matrix value
@@ -675,7 +680,7 @@ def single_cell_hnn_vary():
         # Bar graph plot
         # plotting constants 
         max_ = 0.5
-        bars = 40
+        bars = 80
         # calculate category indices
         categories = []
         for i in range(bars):
@@ -704,7 +709,7 @@ def single_cell_hnn_vary():
 #full_matrix_hnn()
 #full_matrix_lam()
 
-'''
+
 ws, values, means, stds, maxs = single_cell_hnn_vary()
 print ws
 print values
@@ -716,8 +721,7 @@ plt.figure(1)
 plt.plot(ws,values,'bo',linestyle='--',linewidth=2.0)
 #plt.xlabel("Matrix encoder width")
 #plt.xlabel("Id encoder buckets")
-plt.xlabel("Id encoder width")
+#plt.xlabel("Id encoder width")
 plt.ylabel("Proportion of error below 0.0125")
 plt.show()
 # print number of values that fall into first category (good approximation of how well the memory does)
-'''
